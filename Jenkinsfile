@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: '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', url: 'https://github.com/Dockergithub1/demo-app.git'
+                git credentialsId: '1d76f922-a638-46b0-b7e1-91a21fe6600a', url: 'https://github.com/Dockergithub1/demo-app.git'
             }
         }
 
