@@ -10,7 +10,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: '1d76f922-a638-46b0-b7e1-91a21fe6600a', url: 'https://github.com/Dockergithub1/demo-app.git'
+                // Specify the correct branch: main
+                git branch: 'main', 
+                    credentialsId: '1d76f922-a638-46b0-b7e1-91a21fe6600a', 
+                    url: 'https://github.com/Dockergithub1/demo-app.git'
             }
         }
 
@@ -28,6 +31,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
+                // Remove container if exists
                 bat "docker rm -f %CONTAINER_NAME% || exit 0"
                 bat "docker run -d --name %CONTAINER_NAME% -p %PORT%:3000 %IMAGE_NAME%"
             }
