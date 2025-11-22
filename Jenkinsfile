@@ -24,14 +24,17 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh "node test.js"
+                // Run tests inside a temporary Node container
+                sh "docker run --rm -v \$(pwd):/app -w /app node:18 node test.js"
             }
         }
 
         stage('Run Container') {
             steps {
-                // Remove container if exists
+                // Remove existing container if any
                 sh "docker rm -f $CONTAINER_NAME || true"
+
+                // Run the app container
                 sh "docker run -d --name $CONTAINER_NAME -p $PORT:3000 $IMAGE_NAME"
             }
         }
